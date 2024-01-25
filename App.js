@@ -1,6 +1,7 @@
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
 import Chair from './Chair';
+import Table from './Table';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Chair />
 
         {/* Table */}
+        <Table />
       </View>
     </SafeAreaView>
   );
