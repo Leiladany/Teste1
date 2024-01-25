@@ -5,8 +5,10 @@ const Chair = () => {
   const [isBig, setIsBig] = useState(false);
 
   useEffect(() => {
+    console.log('inside useEffect');
 
-  }, [])
+    return () => {};
+  }, [isBig]);
 
   console.log('object :>>', isBig);
 
