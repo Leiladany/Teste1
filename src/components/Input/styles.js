@@ -3,18 +3,21 @@ import {colors} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 54,
+    marginBottom: 20,
   },
-  image: {
-    width: 18,
-    height: 18,
-  },
-  title: {
+  label: {
+    marginBottom: 8,
     color: colors.blue,
-    fontSize: 26,
+    fontSize: 14,
     fontWeight: '500',
+  },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: colors.grey,
+    borderRadius: 14,
+  },
+  input: {
     paddingHorizontal: 16,
+    paddingVertical: 20,
   },
 });
