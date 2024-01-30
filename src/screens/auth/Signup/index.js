@@ -5,6 +5,7 @@ import Input from '../../../components/Input';
 import {styles} from './styles';
 import Checkbox from '../../../components/Checkbox';
 import Button from '../../../components/Button';
+import Seperator from '../../../components/Seperator';
 
 const Signup = () => {
   const [checked, setChecked] = useState(false);
@@ -24,6 +25,7 @@ const Signup = () => {
       </View>
 
       <Button style={styles.button} title="Sign Up" />
+      <Seperator text="Or sign up with" />
     </View>
   );
 };
