@@ -6,9 +6,12 @@ import {styles} from './styles';
 import Checkbox from '../../../components/Checkbox';
 import Button from '../../../components/Button';
 import Seperator from '../../../components/Seperator';
+import GoogleLogin from '../../../components/GoogleLogin';
 
 const Signup = () => {
   const [checked, setChecked] = useState(false);
+
+  const onSignIn = () => {};
   return (
     <View style={styles.container}>
       <AuthHeader title="Sign Up" />
@@ -26,6 +29,13 @@ const Signup = () => {
 
       <Button style={styles.button} title="Sign Up" />
       <Seperator text="Or sign up with" />
+      <GoogleLogin />
+      <Text style={styles.footerText}>
+        Already have an account?
+        <Text onPress={onSignIn} style={styles.footerLink}>
+          Sign In
+        </Text>
+      </Text>
     </View>
   );
 };
