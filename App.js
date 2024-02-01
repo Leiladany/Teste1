@@ -19,9 +19,13 @@ function App() {
     <>
       <NavigationContainer theme={theme}>
         <Stack.Navigator>
-          <Stack.Screen name="Splash" component={Splash} />
-          <Stack.Screen name="Signin" component={Signin} />
-          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen
+            name="Splash"
+            component={Splash}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="Signin" component={Signin} options={{headerShown: false}}/>
+          <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>
