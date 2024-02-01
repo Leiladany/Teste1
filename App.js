@@ -1,14 +1,30 @@
 import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
 import Signup from './src/screens/auth/Signup';
 import Signin from './src/screens/auth/Signin';
+import {NavigationContainer} from '@react-navigation/native';
+import Splash from './src/screens/auth/Splash';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {colors} from './src/utils/colors';
+
+const Stack = createNativeStackNavigator();
 
 function App() {
-  const [theme, setTheme] = useState('light');
+  const theme = {
+    colors: {
+      background: colors.white,
+    },
+  };
+
   return (
-    <SafeAreaView>
-      <Signin />
-    </SafeAreaView>
+    <>
+      <NavigationContainer theme={theme}>
+        <Stack.Navigator>
+          <Stack.Screen name="Splash" component={Splash} />
+          <Stack.Screen name="Signin" component={Signin} />
+          <Stack.Screen name="Signup" component={Signup} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 

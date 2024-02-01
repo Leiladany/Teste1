@@ -7,11 +7,21 @@ import Button from '../../../components/Button';
 import Seperator from '../../../components/Seperator';
 import GoogleLogin from '../../../components/GoogleLogin';
 
-const Signin = () => {
-  const onSignUp = () => {};
+const Signin = ({navigation}) => {
+  const onSignUp = () => {
+    navigation.navigate('Signup');
+  };
+
+  const onBack = () => {
+    if (navigation && navigation.goBack) {
+      navigation.goBack();
+    } else {
+      console.warn('Navigation or goBack function is undefined.');
+    }
+  };
   return (
     <ScrollView style={styles.container}>
-      <AuthHeader title="Sign In" />
+      <AuthHeader onBackPress={onBack} title="Sign In" />
       <Input label="Email" placeholder="example@gmail.com" />
       <Input isPassword label="Password" placeholder="********" />
 

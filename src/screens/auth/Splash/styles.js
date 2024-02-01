@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
   },
   titleContainer: {
     marginVertical: 54,
+    marginTop: 30,
   },
   title: {
     fontSize: 40,
