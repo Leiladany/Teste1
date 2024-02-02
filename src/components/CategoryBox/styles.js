@@ -8,6 +8,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  containerFirst: {
+    marginLeft: 24,
+  },
   title: {
     color: colors.grey,
   },
