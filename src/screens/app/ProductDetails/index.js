@@ -1,18 +1,24 @@
 import React from 'react';
-import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import {Pressable, ScrollView, Text, View, Image} from 'react-native';
 import {styles} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Button from '../../../components/Button';
+import ImageCarousel from '../../../components/ImageCarousel';
 
 const ProductDetails = ({route, navigation}) => {
   const {product} = route?.params || {};
   const onBackPress = () => {
     navigation.goBack();
   };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container}>
-        <Image style={styles.image} source={{uri: product?.image}} />
+        {product?.images && product.images.length ? (
+          <ImageCarousel images={product.images} />
+        ) : (
+          <Image style={styles.image} source={{uri: product?.image}} />
+        )}
         <View style={styles.content}>
           <Text style={styles.title}>{product?.title}</Text>
           <Text style={styles.price}>{product?.price}</Text>
