@@ -6,6 +6,8 @@ export const products = [
       'https://grandrapidschair.com/wp-content/uploads/2016/01/250_Brady_Graphite_Honey-1.jpg',
     category: 1,
     price: '$ 20.00',
+    description:
+      'Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla Bla bla bla bla bla',
   },
   {
     id: 2,
