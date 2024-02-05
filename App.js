@@ -4,6 +4,7 @@ import Signup from './src/screens/auth/Signup';
 import Signin from './src/screens/auth/Signin';
 import Home from './src/screens/app/Home';
 import Favorites from './src/screens/app/Favorites';
+import ProductDetails from './src/screens/app/ProductDetails';
 import Profile from './src/screens/app/Profile';
 import {NavigationContainer} from '@react-navigation/native';
 import Splash from './src/screens/auth/Splash';
@@ -35,8 +36,6 @@ const Tabs = () => (
             ? require('./src/assets/tabs/bookmark_active.png')
             : require('./src/assets/tabs/bookmark.png');
         }
-
-        // You can return any component that you like here!
         return <Image syle={{width: 24, height: 24}} source={icon} />;
       },
       headerShown: false,
@@ -66,6 +65,11 @@ function App() {
               <Stack.Screen
                 name="Tabs"
                 component={Tabs}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ProductDetails"
+                component={ProductDetails}
                 options={{headerShown: false}}
               />
             </>

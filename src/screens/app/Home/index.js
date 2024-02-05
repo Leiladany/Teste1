@@ -9,7 +9,7 @@ import {products} from '../../../data/products';
 import CategoryBox from '../../../components/CategoryBox';
 import ProductHomeItem from '../../../components/ProductHomeItem';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [keyword, setKeyword] = useState();
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -32,7 +32,7 @@ const Home = () => {
         product?.title?.toLowerCase().includes(keyword?.toLowerCase()),
       );
       setFilteredProducts(updatedProducts);
-    } else if (selectedCategory && !keyword) {
+    } else {
       setFilteredProducts(products);
     }
   }, [selectedCategory, keyword]);
@@ -49,7 +49,10 @@ const Home = () => {
   };
 
   const renderProductItem = ({item}) => {
-    return <ProductHomeItem {...item} />;
+    const onProductPress = product => {
+      navigation.navigate('ProductDetails', {product});
+    };
+    return <ProductHomeItem onPress={() => onProductPress(item)} {...item} />;
   };
   return (
     <SafeAreaView>
