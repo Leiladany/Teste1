@@ -13,7 +13,6 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [keyword, setKeyword] = useState();
   const [filteredProducts, setFilteredProducts] = useState(products);
-  console.log('keyword : >>', keyword);
 
   useEffect(() => {
     if (selectedCategory && !keyword) {
