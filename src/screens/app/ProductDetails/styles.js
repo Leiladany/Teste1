@@ -49,4 +49,16 @@ export const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
+  backContainer: {
+    backgroundColor: colors.white,
+    padding: 10,
+    margin: 24,
+    borderRadius: 8,
+    marginRight: 16,
+    position: 'absolute',
+  },
+  backIcon: {
+    width: 20,
+    height: 20,
+  },
 });
