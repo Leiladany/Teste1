@@ -5,27 +5,47 @@ export const styles = StyleSheet.create({
   container: {
     padding: 24,
   },
-  item: {
-    padding: 8,
-    paddingHorizontal: 16,
-    marginVertical: 8,
-  },
   sectionTitle: {
     fontWeight: '500',
-    fontSize: 16,
-    color: colors.grey,
+    fontSize: 14,
+    color: colors.blue,
     marginBottom: 16,
   },
-  sectionHeader: {
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 4,
+  },
+  uploadContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.grey,
+    borderStyle: 'dotted',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+    marginTop: 8,
+  },
+  uploadCircle: {
+    width: 32,
+    height: 32,
+    borderRadius: 20,
+    backgroundColor: colors.lightGrey,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  uploadPlus: {
+    color: colors.white,
+    fontSize: 28,
+    marginTop: -4,
+  },
+  imageRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
-  button: {
-    paddingVertical: 12,
-    marginTop: 16,
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
 });
