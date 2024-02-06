@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import Signup from './src/screens/auth/Signup';
@@ -24,12 +25,12 @@ const ProfileStack = () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{headerShow: false}}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Settings"
         component={Settings}
-        options={{headerShow: false}}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
@@ -54,7 +55,7 @@ const Tabs = () => (
             ? require('./src/assets/tabs/bookmark_active.png')
             : require('./src/assets/tabs/bookmark.png');
         }
-        return <Image syle={{width: 24, height: 24}} source={icon} />;
+        return <Image style={{width: 24, height: 24}} source={icon} />;
       },
       headerShown: false,
       tabBarShowLabel: false,
