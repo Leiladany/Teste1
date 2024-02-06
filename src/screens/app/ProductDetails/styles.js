@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
   },
   description: {
-    color: colors.grey,
+    color: colors.textGrey,
     fontWeight: '300',
     marginVertical: 8,
   },

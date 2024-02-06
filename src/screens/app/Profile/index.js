@@ -7,11 +7,20 @@ import Header from '../../../components/Header';
 import ListItem from '../../../components/ListItem';
 import Button from '../../../components/Button';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const num = 10;
   const onLogout = () => {
     console.log('log out clicked');
   };
+
+  const onSettingsPress = () => {
+    navigation.navigate('Settings');
+  };
+
+  const onMyListingsPress = () => {
+    navigation.navigate('MyListing');
+  };
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header title="Profile" showLogout onLogout={onLogout} />
@@ -19,8 +28,16 @@ const Profile = () => {
         <View style={styles.content}>
           <Text style={styles.name}>User Name</Text>
           <Text style={styles.email}> User Email</Text>
-          <ListItem title="My Listings" subtitle={`You have ${num} listings`} />
-          <ListItem title="Settings" subtitle="Account, FAQ, Contact" />
+          <ListItem
+            onPress={onMyListingsPress}
+            title="My Listings"
+            subtitle={`You have ${num} listings`}
+          />
+          <ListItem
+            onPress={onSettingsPress}
+            title="Settings"
+            subtitle="Account, FAQ, Contact"
+          />
         </View>
         <Button style={{flex: 0}} title="Add New Listing" />
       </View>

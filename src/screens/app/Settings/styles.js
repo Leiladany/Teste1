@@ -4,20 +4,16 @@ import {colors} from '../../../utils/colors';
 export const styles = StyleSheet.create({
   container: {
     padding: 24,
-    flex: 1,
   },
-  name: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.black,
-    marginBottom: 12,
+  item: {
+    padding: 8,
+    paddingHorizontal: 16,
+    marginVertical: 8,
   },
-  email: {
-    fontSize: 14,
+  sectionTitle: {
+    fontWeight: '500',
+    fontSize: 16,
     color: colors.grey,
     marginBottom: 16,
-  },
-  content: {
-    flex: 1,
   },
 });
