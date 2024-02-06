@@ -46,8 +46,8 @@ export const styles = StyleSheet.create({
     marginRight: 16,
   },
   bookmarkIcon: {
-    width: 24,
-    height: 24,
+    width: 16,
+    height: 20,
   },
   backContainer: {
     backgroundColor: colors.white,
@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
   },
   backIcon: {
-    width: 20,
-    height: 20,
+    width: 6.5,
+    height: 13,
   },
 });
