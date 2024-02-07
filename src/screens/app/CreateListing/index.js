@@ -15,11 +15,13 @@ import Header from '../../../components/Header';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Input from '../../../components/Input';
 import {categories} from '../../../data/categories';
+import Button from '../../../components/Button';
 
 const CreateListing = ({navigation}) => {
   const [images, setImages] = useState([]);
   const [values, setValues] = useState({});
   const [loading, setLoading] = useState(false);
+  console.log('values :>>', values);
 
   const goBack = () => {
     navigation.goBack();
@@ -53,8 +55,8 @@ const CreateListing = ({navigation}) => {
         onBackPress={goBack}
         title="Create a new listing"
       />
-      <KeyboardAvoidingView behavior="position">
-        <ScrollView style={styles.container}>
+      <ScrollView style={styles.container}>
+        <KeyboardAvoidingView behavior="position">
           <Text style={styles.sectionTitle}>Upload Photos</Text>
           <View style={styles.imageRow}>
             <TouchableOpacity
@@ -108,8 +110,9 @@ const CreateListing = ({navigation}) => {
             onChangeText={v => onChange(v, 'description')}
             multiline
           />
-        </ScrollView>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+        <Button title="Submit" style={styles.button} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
