@@ -14,6 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../components/Header';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Input from '../../../components/Input';
+import {categories} from '../../../data/categories';
 
 const CreateListing = ({navigation}) => {
   const [images, setImages] = useState([]);
@@ -83,6 +84,14 @@ const CreateListing = ({navigation}) => {
             label="Title"
             value={values.title}
             onChangeText={v => onChange(v, 'title')}
+          />
+          <Input
+            placeholder="Select the category"
+            label="category"
+            value={values.category}
+            onChangeText={v => onChange(v, 'category')}
+            type="picker"
+            options={categories}
           />
           <Input
             placeholder="Enter price in USD"
