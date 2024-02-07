@@ -12,9 +12,11 @@ import {styles} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../components/Header';
 import {launchImageLibrary} from 'react-native-image-picker';
+import Input from '../../../components/Input';
 
 const CreateListing = ({navigation}) => {
   const [images, setImages] = useState([]);
+  const [values, setValues] = useState({});
   const [loading, setLoading] = useState(false);
 
   const goBack = () => {
@@ -37,6 +39,10 @@ const CreateListing = ({navigation}) => {
       );
       return filteredImages;
     });
+  };
+
+  const onChange = (value, key) => {
+    setValues(val => ({...val, [key]: value}));
   };
   return (
     <SafeAreaView>
@@ -71,6 +77,27 @@ const CreateListing = ({navigation}) => {
           ))}
           {loading ? <ActivityIndicator /> : null}
         </View>
+        <Input
+          placeholder="Listing Title"
+          label="Title"
+          value={values.title}
+          onChangeText={v => onChange(v, 'title')}
+        />
+        <Input
+          placeholder="Enter price in USD"
+          label="price"
+          value={values.prices}
+          onChangeText={v => onChange(v, 'price')}
+          keyboardType="numeric"
+        />
+        <Input
+          style={styles.textarea}
+          placeholder="Tell us more..."
+          label="Description"
+          value={values.description}
+          onChangeText={v => onChange(v, 'description')}
+          multiline
+        />
       </ScrollView>
     </SafeAreaView>
   );
