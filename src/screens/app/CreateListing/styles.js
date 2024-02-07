@@ -47,6 +47,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    paddingBottom: 16,
   },
   imageCont: {
     flexDirection: 'row',

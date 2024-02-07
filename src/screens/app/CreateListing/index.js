@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Image,
+  KeyboardAvoidingView,
   Pressable,
   ScrollView,
   Text,
@@ -51,54 +52,55 @@ const CreateListing = ({navigation}) => {
         onBackPress={goBack}
         title="Create a new listing"
       />
+      <KeyboardAvoidingView behavior="position">
+        <ScrollView style={styles.container}>
+          <Text style={styles.sectionTitle}>Upload Photos</Text>
+          <View style={styles.imageRow}>
+            <TouchableOpacity
+              disabled={loading}
+              style={styles.uploadContainer}
+              onPress={uploadNewImage}>
+              <View style={styles.uploadCircle}>
+                <Text style={styles.uploadPlus}>+</Text>
+              </View>
+            </TouchableOpacity>
 
-      <ScrollView style={styles.container}>
-        <Text style={styles.sectionTitle}>Upload Photos</Text>
-        <View style={styles.imageRow}>
-          <TouchableOpacity
-            disabled={loading}
-            style={styles.uploadContainer}
-            onPress={uploadNewImage}>
-            <View style={styles.uploadCircle}>
-              <Text style={styles.uploadPlus}>+</Text>
-            </View>
-          </TouchableOpacity>
-
-          {images?.map(image => (
-            <View style={styles.imageCont} key={image?.fileName}>
-              <Image style={styles.image} source={{uri: image?.uri}} />
-              <Pressable hitSlop={20} onPress={() => onDeleteImage(image)}>
-                <Image
-                  style={styles.delete}
-                  source={require('../../../assets/close.png')}
-                />
-              </Pressable>
-            </View>
-          ))}
-          {loading ? <ActivityIndicator /> : null}
-        </View>
-        <Input
-          placeholder="Listing Title"
-          label="Title"
-          value={values.title}
-          onChangeText={v => onChange(v, 'title')}
-        />
-        <Input
-          placeholder="Enter price in USD"
-          label="price"
-          value={values.prices}
-          onChangeText={v => onChange(v, 'price')}
-          keyboardType="numeric"
-        />
-        <Input
-          style={styles.textarea}
-          placeholder="Tell us more..."
-          label="Description"
-          value={values.description}
-          onChangeText={v => onChange(v, 'description')}
-          multiline
-        />
-      </ScrollView>
+            {images?.map(image => (
+              <View style={styles.imageCont} key={image?.fileName}>
+                <Image style={styles.image} source={{uri: image?.uri}} />
+                <Pressable hitSlop={20} onPress={() => onDeleteImage(image)}>
+                  <Image
+                    style={styles.delete}
+                    source={require('../../../assets/close.png')}
+                  />
+                </Pressable>
+              </View>
+            ))}
+            {loading ? <ActivityIndicator /> : null}
+          </View>
+          <Input
+            placeholder="Listing Title"
+            label="Title"
+            value={values.title}
+            onChangeText={v => onChange(v, 'title')}
+          />
+          <Input
+            placeholder="Enter price in USD"
+            label="price"
+            value={values.prices}
+            onChangeText={v => onChange(v, 'price')}
+            keyboardType="numeric"
+          />
+          <Input
+            style={styles.textarea}
+            placeholder="Tell us more..."
+            label="Description"
+            value={values.description}
+            onChangeText={v => onChange(v, 'description')}
+            multiline
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
