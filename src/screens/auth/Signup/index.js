@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
-import {View, Text, Alert} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Alert, ScrollView, Text, View} from 'react-native';
 import AuthHeader from '../../../components/AuthHeader';
-import Input from '../../../components/Input';
-import {styles} from './styles';
-import Checkbox from '../../../components/Checkbox';
 import Button from '../../../components/Button';
+import Checkbox from '../../../components/Checkbox';
+import Input from '../../../components/Input';
 import Seperator from '../../../components/Seperator';
 import GoogleLogin from '../../../components/GoogleLogin';
+import {styles} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {request} from '../../../utils/request';
+import {signup} from '../../../utils/backendCalls';
+import {UserContext} from '../../../../App';
 
 const Signup = ({navigation}) => {
   const [checked, setChecked] = useState(false);
   const [values, setValues] = useState({});
+  const {setUser} = useContext(UserContext);
 
   const onSignIn = () => {
     navigation.navigate('Signin');
@@ -48,12 +50,10 @@ const Signup = ({navigation}) => {
         return;
       }
 
-      const response = await request({
-        url: '/user/register',
-        method: 'post',
-        data: values,
-      });
-      console.log('response :>> ', response);
+      const token = await signup(values);
+      setUser({token});
+
+      console.log('token :>> ', token);
     } catch (error) {
       console.log('error :>> ', error);
     }
@@ -61,8 +61,9 @@ const Signup = ({navigation}) => {
 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <AuthHeader onBackPress={onBack} title="Sign Up" />
+
         <Input
           value={values.fullName}
           onChangeText={v => onChange('fullName', v)}
@@ -72,7 +73,7 @@ const Signup = ({navigation}) => {
         <Input
           value={values.email}
           onChangeText={v => onChange('email', v)}
-          label="Email"
+          label="E-mail"
           placeholder="example@gmail.com"
         />
         <Input
@@ -80,14 +81,14 @@ const Signup = ({navigation}) => {
           onChangeText={v => onChange('password', v)}
           isPassword
           label="Password"
-          placeholder="********"
+          placeholder="*******"
         />
         <Input
           value={values.confirmPassword}
           onChangeText={v => onChange('confirmPassword', v)}
           isPassword
-          label="confirmPassword"
-          placeholder="********"
+          label="Confirm Password"
+          placeholder="*******"
         />
 
         <View style={styles.agreeRow}>
@@ -99,15 +100,19 @@ const Signup = ({navigation}) => {
         </View>
 
         <Button onPress={onSubmit} style={styles.button} title="Sign Up" />
+
         <Seperator text="Or sign up with" />
+
         <GoogleLogin />
+
         <Text style={styles.footerText}>
           Already have an account?
           <Text onPress={onSignIn} style={styles.footerLink}>
+            {' '}
             Sign In
           </Text>
         </Text>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
