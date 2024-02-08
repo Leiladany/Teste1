@@ -4,7 +4,6 @@ import {styles} from './styles';
 import Button from '../../../components/Button';
 
 const Splash = ({navigation}) => {
-  console.log('navigation :>> ', navigation);
   const onSignup = () => {
     navigation.navigate('Signup');
   };

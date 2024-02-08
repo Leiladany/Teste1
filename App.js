@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, {useState} from 'react';
 import Signup from './src/screens/auth/Signup';
 import Signin from './src/screens/auth/Signin';
 import Home from './src/screens/app/Home';
@@ -20,6 +20,8 @@ import MyListings from './src/screens/app/MyListings';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+export const UserContext = React.createContext();
 
 const ProfileStack = () => {
   return (
@@ -80,7 +82,8 @@ const Tabs = () => (
 );
 
 function App() {
-  const isSignedIn = true;
+  const isSignedIn = false;
+  const [user, setUser] = useState();
   const theme = {
     colors: {
       background: colors.white,
@@ -89,42 +92,44 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer theme={theme}>
-        <Stack.Navigator>
-          {isSignedIn ? (
-            <>
-              <Stack.Screen
-                name="Tabs"
-                component={Tabs}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="ProductDetails"
-                component={ProductDetails}
-                options={{headerShown: false}}
-              />
-            </>
-          ) : (
-            <>
-              <Stack.Screen
-                name="Splash"
-                component={Splash}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="Signin"
-                component={Signin}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="Signup"
-                component={Signup}
-                options={{headerShown: false}}
-              />
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <UserContext.Provider value={{user, setUser}}>
+        <NavigationContainer theme={theme}>
+          <Stack.Navigator>
+            {isSignedIn ? (
+              <>
+                <Stack.Screen
+                  name="Tabs"
+                  component={Tabs}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="ProductDetails"
+                  component={ProductDetails}
+                  options={{headerShown: false}}
+                />
+              </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="Splash"
+                  component={Splash}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="Signin"
+                  component={Signin}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="Signup"
+                  component={Signup}
+                  options={{headerShown: false}}
+                />
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserContext.Provider>
     </SafeAreaProvider>
   );
 }
