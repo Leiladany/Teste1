@@ -2,7 +2,7 @@ export const categories = [
   {
     title: 'Popular',
     image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Gold_Star.svg/1200px-Gold_Star.svg.png',
+      'https://static8.depositphotos.com/1338574/831/i/600/depositphotos_8318731-stock-photo-gold-star.jpg',
   },
   {
     id: 1,

@@ -60,7 +60,7 @@ const CreateListing = ({navigation}) => {
     };
 
     if (img) {
-      data['image'] = {
+      data.image = {
         uri: img?.uri,
         name: img?.fileName,
         type: img?.type,

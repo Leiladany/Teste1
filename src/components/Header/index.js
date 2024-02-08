@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Image, Text, View, Pressable} from 'react-native';
-import {styles} from './styles';
+import {Pressable, Text, View, Image} from 'react-native';
 import Input from '../Input';
+import {styles} from './styles';
 
 const Header = ({
   title,
@@ -10,10 +10,11 @@ const Header = ({
   showLogout,
   showSearch,
   onSearch,
-  showBack,
   keyword,
+  showBack,
 }) => {
   const [showSearchInput, setShowSearchInput] = useState(false);
+
   const onSearchClick = () => {
     setShowSearchInput(s => !s);
   };
@@ -52,6 +53,7 @@ const Header = ({
           <View style={styles.space} />
         )}
       </View>
+
       {showSearchInput ? (
         <Input
           onChangeText={onSearch}

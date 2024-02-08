@@ -1,6 +1,5 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, useContext} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, View, ActivityIndicator} from 'react-native'; // Import ActivityIndicator
 import {styles} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../components/Header';
@@ -13,36 +12,40 @@ import {ServicesContext} from '../../../../App';
 const Home = ({navigation}) => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [keyword, setKeyword] = useState();
-  const [filteredProducts, setFilteredProducts] = useState(services);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const {services, setServices} = useContext(ServicesContext);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   useEffect(() => {
     (async () => {
       const data = await getServices();
       setServices(data);
+      setIsLoading(false); // Set isLoading to false after data is fetched
     })();
-  }, []);
+  }, [setServices]);
 
   useEffect(() => {
-    if (selectedCategory && !keyword) {
-      const updatedProducts = services.filter(
-        product => String(product?.category) === String(selectedCategory),
-      );
-      setFilteredProducts(updatedProducts);
-    } else if (selectedCategory && keyword) {
-      const updatedProducts = services.filter(
-        product =>
-          String(product?.category) === String(selectedCategory) &&
+    if (services) {
+      if (selectedCategory && !keyword) {
+        const updatedProducts = services.filter(
+          product => String(product?.category) === String(selectedCategory),
+        );
+        setFilteredProducts(updatedProducts);
+      } else if (selectedCategory && keyword) {
+        const updatedProducts = services.filter(
+          product =>
+            String(product?.category) === String(selectedCategory) &&
+            product?.title?.toLowerCase().includes(keyword?.toLowerCase()),
+        );
+        setFilteredProducts(updatedProducts);
+      } else if (!selectedCategory && keyword) {
+        const updatedProducts = services.filter(product =>
           product?.title?.toLowerCase().includes(keyword?.toLowerCase()),
-      );
-      setFilteredProducts(updatedProducts);
-    } else if (!selectedCategory && keyword) {
-      const updatedProducts = services.filter(product =>
-        product?.title?.toLowerCase().includes(keyword?.toLowerCase()),
-      );
-      setFilteredProducts(updatedProducts);
-    } else if (!keyword && !selectedCategory) {
-      setFilteredProducts(services);
+        );
+        setFilteredProducts(updatedProducts);
+      } else if (!keyword && !selectedCategory) {
+        setFilteredProducts(services);
+      }
     }
   }, [selectedCategory, keyword, services]);
 
@@ -66,6 +69,12 @@ const Home = ({navigation}) => {
     return <ProductHomeItem onPress={() => onProductPress(item)} {...item} />;
   };
 
+  if (isLoading) {
+    return (
+      <ActivityIndicator style={styles.loader} size="large" color="blue" />
+    ); // Render loading indicator while data is being fetched
+  }
+
   return (
     <SafeAreaView>
       <Header
@@ -81,7 +90,7 @@ const Home = ({navigation}) => {
         horizontal
         data={categories}
         renderItem={renderCategoryItem}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={(_item, index) => String(index)}
       />
 
       <FlatList
