@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -14,14 +14,16 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../components/Header';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Input from '../../../components/Input';
-import {categories} from '../../../data/categories';
 import Button from '../../../components/Button';
+import {categories} from '../../../data/categories';
+import {addService} from '../../../utils/backendCalls';
+import {ServicesContext} from '../../../../App';
 
 const CreateListing = ({navigation}) => {
   const [images, setImages] = useState([]);
   const [values, setValues] = useState({});
   const [loading, setLoading] = useState(false);
-  console.log('values :>>', values);
+  const {setServices} = useContext(ServicesContext);
 
   const goBack = () => {
     navigation.goBack();
@@ -36,6 +38,7 @@ const CreateListing = ({navigation}) => {
       setLoading(false);
     }
   };
+
   const onDeleteImage = image => {
     setImages(list => {
       const filteredImages = list.filter(
@@ -48,6 +51,27 @@ const CreateListing = ({navigation}) => {
   const onChange = (value, key) => {
     setValues(val => ({...val, [key]: value}));
   };
+
+  const onSubmit = async () => {
+    const img = images?.length ? images[0] : null;
+    const data = {
+      ...values,
+      category: values.category?.id,
+    };
+
+    if (img) {
+      data['image'] = {
+        uri: img?.uri,
+        name: img?.fileName,
+        type: img?.type,
+      };
+    }
+    const updatedServices = await addService(data);
+    setServices(updatedServices);
+    // setValues({});
+    navigation.navigate('MyListings');
+  };
+
   return (
     <SafeAreaView>
       <Header
@@ -55,9 +79,11 @@ const CreateListing = ({navigation}) => {
         onBackPress={goBack}
         title="Create a new listing"
       />
+
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView behavior="position">
           <Text style={styles.sectionTitle}>Upload Photos</Text>
+
           <View style={styles.imageRow}>
             <TouchableOpacity
               disabled={loading}
@@ -79,8 +105,10 @@ const CreateListing = ({navigation}) => {
                 </Pressable>
               </View>
             ))}
+
             {loading ? <ActivityIndicator /> : null}
           </View>
+
           <Input
             placeholder="Listing Title"
             label="Title"
@@ -89,7 +117,7 @@ const CreateListing = ({navigation}) => {
           />
           <Input
             placeholder="Select the category"
-            label="category"
+            label="Category"
             value={values.category}
             onChangeText={v => onChange(v, 'category')}
             type="picker"
@@ -97,8 +125,8 @@ const CreateListing = ({navigation}) => {
           />
           <Input
             placeholder="Enter price in USD"
-            label="price"
-            value={values.prices}
+            label="Price"
+            value={values.price}
             onChangeText={v => onChange(v, 'price')}
             keyboardType="numeric"
           />
@@ -111,7 +139,8 @@ const CreateListing = ({navigation}) => {
             multiline
           />
         </KeyboardAvoidingView>
-        <Button title="Submit" style={styles.button} />
+
+        <Button onPress={onSubmit} title="Submit" style={styles.button} />
       </ScrollView>
     </SafeAreaView>
   );
