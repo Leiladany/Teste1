@@ -1,41 +1,52 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useState, useEffect, useContext} from 'react';
 import {FlatList, View} from 'react-native';
 import {styles} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../components/Header';
 import {categories} from '../../../data/categories';
-import {products} from '../../../data/products';
 import CategoryBox from '../../../components/CategoryBox';
 import ProductHomeItem from '../../../components/ProductHomeItem';
+import {getServices} from '../../../utils/backendCalls';
+import {ServicesContext} from '../../../../App';
 
 const Home = ({navigation}) => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [keyword, setKeyword] = useState();
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState(services);
+  const {services, setServices} = useContext(ServicesContext);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getServices();
+      setServices(data);
+    })();
+  }, []);
 
   useEffect(() => {
     if (selectedCategory && !keyword) {
-      const updatedProducts = products.filter(
-        product => product?.category === selectedCategory,
+      const updatedProducts = services.filter(
+        product => String(product?.category) === String(selectedCategory),
       );
       setFilteredProducts(updatedProducts);
     } else if (selectedCategory && keyword) {
-      const updatedProducts = products.filter(
+      const updatedProducts = services.filter(
         product =>
-          product?.category === selectedCategory &&
+          String(product?.category) === String(selectedCategory) &&
           product?.title?.toLowerCase().includes(keyword?.toLowerCase()),
       );
       setFilteredProducts(updatedProducts);
     } else if (!selectedCategory && keyword) {
-      const updatedProducts = products.filter(product =>
+      const updatedProducts = services.filter(product =>
         product?.title?.toLowerCase().includes(keyword?.toLowerCase()),
       );
       setFilteredProducts(updatedProducts);
-    } else {
-      setFilteredProducts(products);
+    } else if (!keyword && !selectedCategory) {
+      setFilteredProducts(services);
     }
-  }, [selectedCategory, keyword]);
+  }, [selectedCategory, keyword, services]);
+
   const renderCategoryItem = ({item, index}) => {
     return (
       <CategoryBox
@@ -52,8 +63,10 @@ const Home = ({navigation}) => {
     const onProductPress = product => {
       navigation.navigate('ProductDetails', {product});
     };
+
     return <ProductHomeItem onPress={() => onProductPress(item)} {...item} />;
   };
+
   return (
     <SafeAreaView>
       <Header
@@ -62,6 +75,7 @@ const Home = ({navigation}) => {
         keyword={keyword}
         title="Find All You Need"
       />
+
       <FlatList
         showsHorizontalScrollIndicator={false}
         style={styles.list}
@@ -70,12 +84,13 @@ const Home = ({navigation}) => {
         renderItem={renderCategoryItem}
         keyExtractor={(item, index) => String(index)}
       />
+
       <FlatList
         style={styles.productsList}
         numColumns={2}
         data={filteredProducts}
         renderItem={renderProductItem}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={item => String(item._id)}
         ListFooterComponent={<View style={{height: 200}} />}
       />
     </SafeAreaView>
