@@ -5,7 +5,6 @@ export const UserContext = React.createContext();
 
 function App() {
   const [user, setUser] = useState();
-  console.log('user state', user);
 
   return (
     <SafeAreaProvider>

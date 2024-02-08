@@ -1,22 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React, {useContext} from 'react';
-import Signup from './src/screens/auth/Signup';
+import React, {useContext, useEffect} from 'react';
 import Signin from './src/screens/auth/Signin';
+import Splash from './src/screens/auth/Splash';
+import Signup from './src/screens/auth/Signup';
 import Home from './src/screens/app/Home';
 import Favorites from './src/screens/app/Favorites';
-import ProductDetails from './src/screens/app/ProductDetails';
 import Profile from './src/screens/app/Profile';
 import Settings from './src/screens/app/Settings';
-import CreateListing from './src/screens/app/CreateListing';
+import ProductDetails from './src/screens/app/ProductDetails';
 import {NavigationContainer} from '@react-navigation/native';
-import Splash from './src/screens/auth/Splash';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {colors} from './src/utils/colors';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {colors} from './src/utils/colors';
 import {Image} from 'react-native';
+import CreateListing from './src/screens/app/CreateListing';
 import MyListings from './src/screens/app/MyListings';
 import {UserContext} from './App';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -79,13 +80,19 @@ const Tabs = () => (
   </Tab.Navigator>
 );
 
-function Routes() {
-  const {user} = useContext(UserContext);
-  console.log('user context', user);
+const Routes = () => {
+  const {user, setUser} = useContext(UserContext);
+
+  useEffect(() => {
+    (async () => {
+      const token = await AsyncStorage.getItem('auth_token');
+      setUser({token});
+    })();
+  }, [setUser]);
 
   const theme = {
     colors: {
-      backgroundColor: colors.white,
+      background: colors.white,
     },
   };
 
@@ -127,6 +134,6 @@ function Routes() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default React.memo(Routes);

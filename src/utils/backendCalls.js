@@ -13,7 +13,7 @@ export const login = async values => {
       return response?.data.token;
     }
   } catch (e) {
-    console.log('e', e);
+    console.log('e login :>>', e);
   }
 };
 
@@ -31,6 +31,6 @@ export const signup = async values => {
       return loginResponse;
     }
   } catch (e) {
-    console.log('e', e);
+    console.log('e signup :>>', e);
   }
 };
