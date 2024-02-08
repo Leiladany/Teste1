@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React, {useContext, useEffect} from 'react';
@@ -18,6 +19,7 @@ import CreateListing from './src/screens/app/CreateListing';
 import MyListings from './src/screens/app/MyListings';
 import {UserContext} from './App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {addTokenToAxios} from './src/utils/request';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,6 +91,12 @@ const Routes = () => {
       setUser({token});
     })();
   }, [setUser]);
+
+  useEffect(() => {
+    if (user?.token) {
+      addTokenToAxios(user?.token);
+    }
+  }, []);
 
   const theme = {
     colors: {

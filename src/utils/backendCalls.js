@@ -34,3 +34,18 @@ export const signup = async values => {
     console.log('e signup :>>', e);
   }
 };
+
+export const getProfile = async () => {
+  try {
+    const response = await request({
+      url: '/user/profile',
+      method: 'get',
+    });
+    if (response) {
+      console.log('response', response);
+      return response?.data;
+    }
+  } catch (e) {
+    console.log('e profile :>>', e);
+  }
+};
