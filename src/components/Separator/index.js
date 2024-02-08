@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native'; // Make sure you import Pressable from react-native
 import {styles} from './styles';
 
-const Seperator = ({text}) => {
+const Separator = ({text}) => {
   return (
     <View style={styles.container}>
       <View style={styles.line} />
@@ -12,4 +12,4 @@ const Seperator = ({text}) => {
   );
 };
 
-export default React.memo(Seperator);
+export default React.memo(Separator);

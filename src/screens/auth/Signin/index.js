@@ -1,34 +1,56 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {ScrollView, Text} from 'react-native';
 import AuthHeader from '../../../components/AuthHeader';
-import Input from '../../../components/Input';
-import {styles} from './styles';
 import Button from '../../../components/Button';
-import Seperator from '../../../components/Seperator';
+import Input from '../../../components/Input';
+import Separator from '../../../components/Separator';
 import GoogleLogin from '../../../components/GoogleLogin';
+import {styles} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {login} from '../../../utils/backendCalls';
+import {UserContext} from '../../../../App';
 
 const Signin = ({navigation}) => {
+  const [values, setValues] = useState({});
+  const {setUser} = useContext(UserContext);
+
   const onSignUp = () => {
     navigation.navigate('Signup');
   };
 
   const onBack = () => {
-    if (navigation && navigation.goBack) {
-      navigation.goBack();
-    } else {
-      console.warn('Navigation or goBack function is undefined.');
-    }
+    navigation.goBack();
+  };
+
+  const onChange = (key, value) => {
+    setValues(v => ({...v, [key]: value}));
+  };
+
+  const onSubmit = async () => {
+    const token = await login(values);
+
+    setUser({token});
   };
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
         <AuthHeader onBackPress={onBack} title="Sign In" />
-        <Input label="Email" placeholder="example@gmail.com" />
-        <Input isPassword label="Password" placeholder="********" />
+        <Input
+          value={values.email}
+          onChangeText={v => onChange('email', v)}
+          label="Email"
+          placeholder="example@gmail.com"
+        />
+        <Input
+          value={values.password}
+          onChangeText={v => onChange('password', v)}
+          isPassword
+          label="Password"
+          placeholder="********"
+        />
 
-        <Button style={styles.button} title="Sign In" />
-        <Seperator text="Or sign in with" />
+        <Button onPress={onSubmit} style={styles.button} title="Sign In" />
+        <Separator text="Or sign in with" />
         <GoogleLogin />
         <Text style={styles.footerText}>
           Dont't have an account?
